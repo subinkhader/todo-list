@@ -14,10 +14,12 @@ mongoose
 
 app.post("/add", (req, res) => {
   const task = req.body.task;
+  console.log(task);
+
   TodoModel.create({
     task: task,
   })
-    .then((resu) => console.log(resu))
+    .then((resu) => res.json(resu))
     .catch((err) => console.log(err));
 });
 app.get("/get", (req, res) => {
