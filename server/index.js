@@ -13,7 +13,7 @@ mongoose
   .catch((err) => console.log(err));
 
 app.post("/add", (req, res) => {
-  const task = req.body.task;
+  const task = req.body.todo;
   console.log(task);
 
   TodoModel.create({

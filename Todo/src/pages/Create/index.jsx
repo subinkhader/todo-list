@@ -4,7 +4,7 @@ const Create = () => {
   const [todo, setTodo] = useState([]);
   const handleAdd = () => {
     axios
-      .post("http://localhost:3001/add", { task: todo })
+      .post("http://localhost:3001/add", { todo: todo })
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
   };
