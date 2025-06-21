@@ -22,11 +22,28 @@ app.post("/add", (req, res) => {
     .then((resu) => res.json(resu))
     .catch((err) => console.log(err));
 });
+
 app.get("/get", (req, res) => {
   TodoModel.find()
     .then((data) => res.json(data))
     .catch((err) => console.log(err));
 });
+
+app.put("/checkboxuncheck/", (req, res) => {
+  const id = req.body.todo._id;
+  console.log(req.body.todo);
+  TodoModel.findByIdAndUpdate({ _id: id }, { done: req.body.todo.done })
+    .then((data) => res.json(data))
+    .catch((err) => console.log(err));
+});
+
+// app.put("/checkboxcheck/:id", (req, res) => {
+//   const { id } = req.params;
+//   console.log(id);
+//   TodoModel.findByIdAndUpdate({ _id: id }, { done: false })
+//     .then((data) => res.json(data))
+//     .catch((err) => console.log(err));
+// });
 
 app.listen(3001, () => {
   console.log("server is running");
