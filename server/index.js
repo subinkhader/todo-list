@@ -29,10 +29,26 @@ app.get("/get", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+app.get("/getById/:id", (req, res) => {
+  const { id } = req.params;
+  TodoModel.findById({ _id: id })
+    .then((data) => res.json(data))
+    .catch((err) => console.log(err));
+});
+
 app.put("/checkboxuncheck/", (req, res) => {
   const id = req.body.todo._id;
   console.log(req.body.todo);
-  TodoModel.findByIdAndUpdate({ _id: id }, { done: req.body.todo.done })
+  TodoModel.findByIdAndUpdate(
+    { _id: id },
+    { done: req.body.todo.done, task: req.body.todo.task }
+  )
+    .then((data) => res.json(data))
+    .catch((err) => console.log(err));
+});
+app.delete("/delete/:id", (req, res) => {
+  const { id } = req.params;
+  TodoModel.findByIdAndDelete({ _id: id })
     .then((data) => res.json(data))
     .catch((err) => console.log(err));
 });

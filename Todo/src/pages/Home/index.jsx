@@ -119,15 +119,21 @@ import { Box, Checkbox } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import RadioButtonCheckedIcon from "@mui/icons-material/RadioButtonChecked";
+import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [todos, setTodos] = useState([]);
 
-  useEffect(() => {
+  const Fetchdata = () => {
     axios
       .get("http://localhost:3001/get")
       .then((result) => setTodos(result.data))
       .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    Fetchdata();
   }, []);
 
   const check = (e, todo, index) => {
@@ -145,6 +151,20 @@ const Home = () => {
       })
       .catch((err) => console.log(err));
   };
+
+  const handleDelete = (id) => {
+    axios
+      .delete("http://localhost:3001/delete/" + id)
+      .then((res) => {
+        console.log(res);
+        Fetchdata();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  // const editData = (todo) => {
+
+  // }
 
   return (
     <div>
@@ -169,7 +189,7 @@ const Home = () => {
                 marginTop: "10px",
               }}
             >
-              {todo?.done ? "checked" : "unchecked"}
+              {/* {todo?.done ? "checked" : "unchecked"} */}
 
               <input
                 type="checkbox"
@@ -179,7 +199,15 @@ const Home = () => {
               <p className={todo.done ? "line_through" : ""}>{todo.task}</p>
               <Box className="checkbox">
                 <span>
-                  <DeleteIcon className="icon" />
+                  <Link to={"/edit/" + todo._id}>
+                    <EditIcon />
+                  </Link>
+                </span>
+                <span>
+                  <DeleteIcon
+                    onClick={() => handleDelete(todo._id)}
+                    className="icon"
+                  />
                 </span>
               </Box>
             </Box>

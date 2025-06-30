@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 const Create = () => {
-  const [todo, setTodo] = useState([]);
+  const [todo, setTodo] = useState("");
   const handleAdd = () => {
     axios
       .post("http://localhost:3001/add", { todo: todo })
       .then((result) => console.log(result))
       .catch((err) => console.log(err));
+    setTodo("");
   };
+
   return (
     <>
       <input
         type="text"
+        value={todo}
         name=""
         id=""
         style={{
